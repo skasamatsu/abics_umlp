@@ -1,0 +1,3 @@
+pair_style      aenet
+pair_coeff      * * v00 Al Mg 15t-15t.nn Al Mg
+neighbor        0.1 bin
