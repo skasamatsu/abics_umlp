@@ -81,6 +81,19 @@ train = 'mpirun -n 8 /home/kasamatsu/git/aenet/bin/train.x-2.0.4-ifort_intelmpi'
 ```
 を、自身の環境にインストールしたaenetへのパスで置き換えてください。mpi版のtrainを使う場合は適切（CPUコア数以下）に並列数を設定してください。
 
+### 説明省略版
+8コア以上のCPUを有するシステムで以下を実行すると、温度依存性がMC1/DOI.datに出力されるはずです。
+```sh
+for i in 0 1
+do
+mpirun -n 8 abics_mlref input.toml >> mlref.out
+bash parallel_run.sh 
+mpirun -n 8 abics_mlref input.toml >> mlref.out
+abics_train input.toml >> train.out
+mpirun -n 8 abics_sampling input.toml >> sampling.out
+done
+```
+
 ### 初期データの生成
 input.tomlに記載されている結晶格子と組成の情報をもとにランダム配置を生成します。第一原理計算コードを指定すると、それ用の入力ファイルも自動生成できます(VASP, OpenMX, QEに対応)。今回はuser指定のエネルギーソルバーを使うので、座標だけがAL0ディレクトリ以下の子ディレクトリに生成されます。
 
