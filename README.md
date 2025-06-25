@@ -65,8 +65,33 @@ echo quit | nvidia-cuda-mps-control
 nvidia-smi -i 0 -c 0
 ```
 
+## 計算の実行(説明省略)
+### input.tomlの調整
+14行目の
+```
+path= '/home/kasamatsu/git/aenet/bin/predict.x-2.0.4-ifort_serial'
+```
+39行目、40行目の
+```
+generate = '/home/kasamatsu/git/aenet/bin/generate.x-2.0.4-ifort_serial'
+train = 'mpirun -n 8 /home/kasamatsu/git/aenet/bin/train.x-2.0.4-ifort_intelmpi'
+```
+を、自身の環境にインストールしたaenetへのパスで置き換えてください。mpi版のtrainを使う場合は適切（CPUコア数以下）に並列数を設定してください。
 
-## 計算の実行
+### 計算の実行
+8コア以上のCPUを有するシステムで以下を実行すると、温度依存性がMC1/DOI.datに出力されるはずです。
+```sh
+for i in 0 1
+do
+mpirun -n 8 abics_mlref input.toml >> mlref.out
+bash parallel_run.sh 
+mpirun -n 8 abics_mlref input.toml >> mlref.out
+abics_train input.toml >> train.out
+mpirun -n 8 abics_sampling input.toml >> sampling.out
+done
+```
+
+## 計算の実行（ある程度解説付き）
 このチュートリアルでは、用意したインプットファイルを用いて、MgAl<sub>2</sub>O<sub>4</sub>スピネル結晶のMg/Al反転度の温度依存性を計算し、abICSの計算手順を確認します。
 
 ### input.tomlの調整
@@ -81,18 +106,7 @@ train = 'mpirun -n 8 /home/kasamatsu/git/aenet/bin/train.x-2.0.4-ifort_intelmpi'
 ```
 を、自身の環境にインストールしたaenetへのパスで置き換えてください。mpi版のtrainを使う場合は適切（CPUコア数以下）に並列数を設定してください。
 
-### 説明省略版
-8コア以上のCPUを有するシステムで以下を実行すると、温度依存性がMC1/DOI.datに出力されるはずです。
-```sh
-for i in 0 1
-do
-mpirun -n 8 abics_mlref input.toml >> mlref.out
-bash parallel_run.sh 
-mpirun -n 8 abics_mlref input.toml >> mlref.out
-abics_train input.toml >> train.out
-mpirun -n 8 abics_sampling input.toml >> sampling.out
-done
-```
+
 
 ### 初期データの生成
 input.tomlに記載されている結晶格子と組成の情報をもとにランダム配置を生成します。第一原理計算コードを指定すると、それ用の入力ファイルも自動生成できます(VASP, OpenMX, QEに対応)。今回はuser指定のエネルギーソルバーを使うので、座標だけがAL0ディレクトリ以下の子ディレクトリに生成されます。
