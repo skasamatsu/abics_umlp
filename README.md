@@ -28,7 +28,7 @@ pip3 install abics
 ```
 
 ### aenet
-aenet 2.0.4をインストールしてください。開発元のバージョンは最近のIntel oneapiだとsegfaultするので、fix版を用意してあります。もう少し古いコンパイラやgfortran, gccを使う場合は開発元のバージョンでも多分大丈夫です。
+aenet 2.0.4をインストールしてください。開発元のバージョンは最近のIntel oneapiだとsegfaultするので、fix版を用意してあります。もう少し古いコンパイラやgfortran, gccを使う場合は開発元のバージョンでも多分大丈夫です。Pythonインタフェースをコンパイルする必要はありません。
 ```sh
 git clone https://github.com/skasamatsu/aenet.git
 cd aenet
