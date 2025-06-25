@@ -1,6 +1,12 @@
 # abICS + 汎用機械学習ポテンシャル　チュートリアル
 
 ## 準備
+### チュートリアルファイルのダウンロード
+```sh
+git clone https://github.com/skasamatsu/abics_umlp.git
+cd abics_umlp
+```
+
 ### Python環境の準備
 condaやpyenvなどですでに自分で管理できている場合は、本チュートリアル向けに環境を用意してください。ここでは一例としてminiforgeのcondaをインストールして、環境を用意する方法を記載します。
 ```sh
