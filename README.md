@@ -3,7 +3,7 @@
 ## 準備
 
 ### Python環境の準備
-condaやpyenvなどですでに自分で管理できている場合は、本チュートリアル向けに環境を用意してください。ここでは一例としてminiforgeのcondaをインストールして、環境を用意する方法を記載します。
+condaやpyenvなどですでに自分で管理できている場合は、本チュートリアル向けに環境を用意してください。Pythonが古いと動作しない可能性があります。3.12で検証済みです。ここでは一例としてminiforgeのcondaをインストールして、環境を用意する方法を記載します。
 ```sh
 curl -L -O "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-$(uname)-$(uname -m).sh"
 
